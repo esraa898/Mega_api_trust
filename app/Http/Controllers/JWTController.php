@@ -46,7 +46,7 @@ class JWTController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-        return $this->apiResponce('200','userData',null,$user);
+        return $this->login($request);
     }
 
     /**

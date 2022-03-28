@@ -26,7 +26,7 @@ Route::group(['middleware' => 'api'], function($router) {
     
 });
 
-Route::group(['prefix'=>'task'],function(){
+Route::group(['prefix'=>'task' ,'middleware' => 'jwtAuth'],function(){
   Route::post('/create',[TasksController::class,'create']);
   Route::get('/all',[TasksController::class,'index']);
   Route::post('/update/{id}',[TasksController::class,'update']);

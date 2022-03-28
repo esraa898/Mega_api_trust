@@ -37,7 +37,7 @@ class JWTController extends Controller
         ]);
 
         if($validator->fails()) {
-            return $this->apiResponce('404','Validation Error',$validator->errors());
+            return $this->apiResponce(404,'Validation Error',$validator->errors());
         }
 
         $user = User::create([
@@ -62,11 +62,11 @@ class JWTController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->apiResponce('404','Validation Error',$validator->errors());
+            return $this->apiResponce(404,'Validation Error',$validator->errors());
         }
 
         if (!$token = auth()->attempt($validator->validated())) {
-            return $this->apiResponce('404','Unauthorized',$validator->errors());
+            return $this->apiResponce(404,'Unauthorized',$validator->errors());
             
         }
 

@@ -15,7 +15,8 @@ class TasksController extends Controller
     use ApiResponceTrait;
     public function index(){
 
-      $tasks= task::with('user')->where('id',Auth::user()->id)->get();
+      $tasks= task::where('user_id',Auth::user()->id)->get();
+      
       return $this->apiResponce(200,'user Tasks',null,$tasks);
   
     }
@@ -100,5 +101,12 @@ if ($validation->fails()){
      
         $task->delete();
         return $this->apiResponce(200,'task deleted succesfully',null);
+    }
+
+    public function downloadfile($id,$filename){
+
+        $path=public_path('Attachements/'.$id.'/'.$filename);
+        return response()->download($path);
+
     }
 }

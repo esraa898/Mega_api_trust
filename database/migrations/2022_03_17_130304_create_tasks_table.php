@@ -21,7 +21,6 @@ class CreateTasksTable extends Migration
             $table->integer('state');
             $table->string('attachement')->nullable();
             $table->time('period')->nullable();
-            $table->string('created_by')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->timestamps();

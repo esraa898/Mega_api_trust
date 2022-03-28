@@ -33,7 +33,7 @@ class JWTController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
+            'password' => 'required|string',
         ]);
 
         if($validator->fails()) {
@@ -46,7 +46,7 @@ class JWTController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-        return $this->login( $request);
+        return $this->apiResponce('200','userData',null,$user);
     }
 
     /**

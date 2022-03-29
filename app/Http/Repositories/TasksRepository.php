@@ -30,7 +30,7 @@ class TasksRepository implements TasksInterface
             'description' => 'required|max:250',
             'priority' => 'required',
             'state' => 'required',
-            'attachement' => 'mimes:pdf,jpeg,png,jpg',
+            'attachement' => 'nullable|mimes:pdf,jpeg,png,jpg',
 
         ]);
 
@@ -38,8 +38,11 @@ class TasksRepository implements TasksInterface
             return $this->apiResponce(400, 'validation Error', $validation->errors());
         }
 
-
-          $filename= $request->file('attachement')->store('attachements');
+          if($request->has('attachement')){
+                $filename= $request->file('attachement')->store('attachements');
+          }else{
+              $filename= "";
+          }
 
         $task =  task::create([
             'title' => $request->title,

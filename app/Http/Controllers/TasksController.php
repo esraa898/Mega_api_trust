@@ -2,111 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\task;
+use App\Http\Interfaces\TasksInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AddTaskRequest;
-use App\Http\traits\ApiResponceTrait;
-use Illuminate\Support\Facades\Validator;
+
 
 class TasksController extends Controller
 {
 
-    use ApiResponceTrait;
-    public function index(){
+    protected $TasksInterface;
 
-      $tasks= task::where('user_id',Auth::user()->id)->get();
-      
-      return $this->apiResponce(200,'user Tasks',null,$tasks);
-  
+    public function __construct(TasksInterface $tasksInterface)
+    {
+        $this->TasksInterface = $tasksInterface;
+    }
+    public function index()
+    {
+        return   $this->TasksInterface->index();
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
 
-      
-    
-        $validation= validator::make($request->all(),[
-            'title'=>'required',
-            'description'=>'required|max:250',
-            'priority'=>'required',
-            'state'=>'required',
-            'attachement'=> 'mimes:pdf,jpeg,png,jpg',
-            
-        ]); 
-   
-if ($validation->fails()){
-    return $this->apiResponce(400,'validation Error',$validation->errors());
-}
-
-
-
-
-      $task=  task::create([
-          'title'=>$request->title,
-          'description'=>$request->description,
-          'priority'=>$request->priority,
-          'state'=>$request->state,
-          'attachement'=> $request->attachement,
-          'period'=>$request->period,
-          'user_id'=>Auth::user()->id,
-        ]);
-      
-        
-        return $this->apiResponce(200,'task added succesfully',null,$task);
-
-    }
-   
-    public function update( Request $request,$id){
-
-        
-        $task= task::find($id);
-      
-        $validation= validator::make($request->all(),[
-            'id'=>'exists:tasks,id',
-            'title'=>'required',
-            'description'=>'required|max:250',
-            'priority'=>'required',
-            'state'=>'required',
-            'attachement'=> 'mimes:pdf,jpeg,png,jpg',
-            
-        ]);
-if ($validation->fails()){
-    return $this->apiResponce(400,'validation Error',$validation->errors());
-}
-
-     
-     $task->update([
-        'title'=>$request->title,
-        'description'=>$request->description,
-        'priority'=>$request->priority,
-        'state'=>$request->state,
-        'attachement'=>$request->attachement,
-        'period'=>$request->period,
-        'user_id'=>Auth::user()->id,
-
-     ]);
-
-     return $this->apiResponce(200,'task updated succesfully',null,$task);
-
-    }
-    public function delete($id){
-        $task= task::find($id);
-        $validation= validator([
-            'id'=>'exists:tasks,id',
-        ]);
-if ($validation->fails()){
-    return $this->apiResponce(400,'validation Error',$validation->errors());
-}
-
-     
-        $task->delete();
-        return $this->apiResponce(200,'task deleted succesfully',null);
+        return   $this->TasksInterface->create($request);
     }
 
-    public function downloadfile($id,$filename){
+    public function update(Request $request, $id)
+    {
 
-        $path=public_path('Attachements/'.$id.'/'.$filename);
-        return response()->download($path);
-
+        return   $this->TasksInterface->update($request, $id);
+    }
+    public function delete($id)
+    {
+        return   $this->TasksInterface->delete($id);
     }
 }

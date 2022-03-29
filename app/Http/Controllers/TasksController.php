@@ -80,7 +80,7 @@ if ($validation->fails()){
         'description'=>$request->description,
         'priority'=>$request->priority,
         'state'=>$request->state,
-        'attachement'=>$request->file('attachement')->store('attachements'),
+        'attachement'=>$request->attachement,
         'period'=>$request->period,
         'user_id'=>Auth::user()->id,
 

@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Http\traits\ApiResponceTrait;
 use App\Models\task;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-
-class AddTaskRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
-    use ApiResponceTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,11 +25,9 @@ class AddTaskRequest extends FormRequest
      */
     public function rules()
     {
-        return task::rules();
+        return  array_merge( task::rules(),[ 'id' => 'exists:tasks,id'] ) ;
     }
 
-   
-    
     public function failedValidation( $validator)
 {
     $response= $this->apiResponce(404,'validation error',$validator->errors());

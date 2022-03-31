@@ -4,6 +4,7 @@
 namespace App\Http\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Interfaces\JWTInterface;
 use App\Http\traits\ApiResponceTrait;
@@ -88,7 +89,7 @@ class JWTRepository implements JWTInterface
     {
         $array=[
             'access_token' => $token,
-            
+        
          
         ];
         return $this->apiResponce(200,'login',null,$array);

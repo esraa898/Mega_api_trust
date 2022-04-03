@@ -4,9 +4,10 @@ namespace App\Http\Repositories;
 
 use App\Models\task;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Http\traits\ApiResponceTrait;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Interfaces\TasksInterface;
+use Illuminate\Support\Facades\Validator;
 
 class TasksRepository implements TasksInterface
 {
@@ -39,8 +40,12 @@ class TasksRepository implements TasksInterface
         ]);
         if ($validation->fails()) {
             return $this->apiResponce(400, 'validation Error', $validation->errors());
-        }
+        }  
+        $filename=$task->attachement;
+        unlink(storage_path('app/'.$filename));
         $task->delete();
+      
+       
         return $this->apiResponce(200, 'task deleted succesfully', null);
     }
 }

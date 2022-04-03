@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Http\traits\ApiResponceTrait;
 use App\Http\Interfaces\TasksInterface;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class TasksRepository implements TasksInterface
@@ -43,7 +44,8 @@ class TasksRepository implements TasksInterface
         }  
         $filename=$task->attachement;
       
-       if(file::exists(storage_path('app/'.$filename))){
+       if(Storage::exists($filename)){
+          
 
         unlink(storage_path('app/'.$filename));
        }

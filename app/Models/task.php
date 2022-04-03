@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\ValidationException;
+
 
 class task extends Model
 {
@@ -26,6 +26,7 @@ class task extends Model
     'description' => 'required|max:250',
     'priority' => 'required',
     'state' => 'required',
+     'period' => 'required',
     'attachement' => 'nullable|mimes:pdf,jpeg,png,jpg',
     ];
 

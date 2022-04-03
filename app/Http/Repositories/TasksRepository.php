@@ -42,7 +42,12 @@ class TasksRepository implements TasksInterface
             return $this->apiResponce(400, 'validation Error', $validation->errors());
         }  
         $filename=$task->attachement;
+      
+       if(file::exists(storage_path('app/'.$filename))){
+
         unlink(storage_path('app/'.$filename));
+       }
+        
         $task->delete();
       
        

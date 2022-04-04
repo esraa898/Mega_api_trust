@@ -4,11 +4,11 @@ namespace App\Http\Repositories;
 
 use App\Models\task;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use App\Http\traits\ApiResponceTrait;
 use App\Http\Interfaces\TasksInterface;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
+
 
 class TasksRepository implements TasksInterface
 {
@@ -20,6 +20,20 @@ class TasksRepository implements TasksInterface
         return $this->apiResponce(200, 'user Tasks', null, $tasks);
     }
 
+
+    public function taskDetails($id){
+        $validation = validator([
+            'id' => 'exists:tasks,id',
+        ]);
+        if ($validation->fails()) {
+            return $this->apiResponce(400, 'validation Error', $validation->errors());
+        }  
+             $task = task::find($id);
+           
+            
+             
+       return $this->apiResponce(200, 'task details', null, $task);
+    }
     public function create($request)
     {
        
@@ -45,14 +59,10 @@ class TasksRepository implements TasksInterface
         $filename=$task->attachement;
       
        if(Storage::exists($filename)){
-          
-
+        
         unlink(storage_path('app/'.$filename));
        }
-        
         $task->delete();
-      
-       
         return $this->apiResponce(200, 'task deleted succesfully', null);
     }
 }

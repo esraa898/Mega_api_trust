@@ -21,6 +21,10 @@ class TasksController extends Controller
     {
         return   $this->TasksInterface->index();
     }
+    public function taskDetails($id){
+        return $this->TasksInterface->taskDetails($id);
+
+    }
 
     public function create(AddTaskRequest $request)
     {

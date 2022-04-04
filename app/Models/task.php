@@ -26,7 +26,7 @@ class task extends Model
     'description' => 'required|max:250',
     'priority' => 'required',
     'state' => 'required',
-     'period' => 'required',
+    'period' => 'required',
     'attachement' => 'nullable|mimes:pdf,jpeg,png,jpg',
     ];
 

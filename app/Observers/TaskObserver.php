@@ -3,19 +3,22 @@
 namespace App\Observers;
 
 use App\Models\task;
+use App\Http\traits\ImageTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TaskObserver
 {
+    use ImageTrait;
     public function creating(task $task){
        
 
         if(request()->has('attachement')){
 
-     $filename=request()->file('attachement')->store('attachements');
-        } else {
-            $filename= " ";
-        }
+     $file=request()->file('attachement');
+    $filename= $this->storeImage($file);  
+          
+        } 
 
 
         $task->attachement = $filename;
@@ -25,13 +28,12 @@ class TaskObserver
     public function updating(task $task){
 
         if(request()->has('attachement')){
-
-            $filename=request()->file('attachement')->store('attachements');
-               } else {
-                   $filename= " ";
-               }
+           $file=request()->file('attachement');
+            $filename= $this->storeImage($file); 
+          }
                $task->attachement =(isset($filename)) ? $filename : $task->getRawOriginal('attachement') ;
                $task->user_id =Auth::user()->id;
          
-    }
+    
+}
 }

@@ -44,12 +44,16 @@ class TasksRepository implements TasksInterface
     public function update($request, $id)
     {
         $task = task::find($id); 
-        $task->update($request->validated());
+        if(request()->has('attachement')){
+            storage::disk('s3')->delete($task->attachement);
+        }
+        $task->update($request->validated(),);
         return $this->apiResponce(200, 'task updated succesfully', null, $task);
     }
     public function delete($id)
     {
         $task = task::find($id);
+
         $validation = validator([
             'id' => 'exists:tasks,id',
         ]);
@@ -58,9 +62,10 @@ class TasksRepository implements TasksInterface
         }  
         $filename=$task->attachement;
       
-       if(Storage::exists($filename)){
+       if(Storage::disk('s3')->exists($filename)){
+          
         
-        unlink(storage_path('app/'.$filename));
+        Storage::disk('s3')->delete($filename);
        }
         $task->delete();
         return $this->apiResponce(200, 'task deleted succesfully', null);

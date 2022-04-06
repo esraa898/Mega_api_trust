@@ -19,8 +19,9 @@ class JWTController extends Controller
     protected $JwtInterface;
     public function __construct(JWTInterface $JwtInterface)
     {
-        $this->JwtInterface = $JwtInterface;
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->JwtInterface = $JwtInterface;
+        
     }
 
     /**

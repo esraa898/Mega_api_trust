@@ -10,11 +10,13 @@ trait ImageTrait{
         $fileUrl= 'attachements';
        
       $path=  Storage::disk('s3')->put($fileUrl, $file);
+   
+     
       if(Storage::disk('s3')->exists($oldfile)){
 
         Storage::disk('s3')->delete($oldfile);
       }
-      $path= "https://megatrustapi2.s3.amazonaws.com/".$path;
+     $path= Storage::disk('s3')->url($path);
     return $path;
     
        

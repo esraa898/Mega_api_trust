@@ -14,6 +14,7 @@ trait ImageTrait{
 
         Storage::disk('s3')->delete($oldfile);
       }
+      $path= "https://megatrustapi2.s3.amazonaws.com/".$path;
     return $path;
     
        

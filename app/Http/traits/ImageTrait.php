@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Storage;
 
 trait ImageTrait{
 
+
+  
     public function storeImage($file,$oldfile=null){
         $fileUrl= 'attachements';
        
@@ -21,5 +23,12 @@ trait ImageTrait{
     
        
     }
+
+    public function explodePath($filename){
+
+      $filename= explode('/',$filename,4);
+     return $filename[3];
+    }
+    
 
 }

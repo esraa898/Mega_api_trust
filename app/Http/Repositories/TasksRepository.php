@@ -38,7 +38,7 @@ class TasksRepository implements TasksInterface
              
        return $this->apiResponce(200, 'task details', null, $task);
     }
-    
+
     public function create($request)
     {
        
@@ -68,9 +68,9 @@ class TasksRepository implements TasksInterface
             return $this->apiResponce(400, 'validation Error', $validation->errors());
         }  
         $filename=$task->attachement;
-        $filename= $this->explodePath($filename);
+
        if(Storage::disk('s3')->exists($filename)){
-          
+         $filename= $this->explodePath($filename);
         
          Storage::disk('s3')->delete($filename);
        }

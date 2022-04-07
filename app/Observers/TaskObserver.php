@@ -19,7 +19,9 @@ class TaskObserver
     $filename= $this->storeImage($file);  
    
     
-        } 
+        } else{
+            $filename = " ";
+        }
 
 
         $task->attachement = $filename;

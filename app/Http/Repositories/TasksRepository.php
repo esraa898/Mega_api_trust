@@ -62,11 +62,11 @@ class TasksRepository implements TasksInterface
         }  
         $filename=$task->attachement;
       
-       if(Storage::disk('s3')->exists($filename)){
+    //    if(Storage::disk('s3')->exists($filename)){
           
         
-        Storage::disk('s3')->delete($filename);
-       }
+    //     Storage::disk('s3')->delete($filename);
+    //    }
         $task->delete();
         return $this->apiResponce(200, 'task deleted succesfully', null);
     }

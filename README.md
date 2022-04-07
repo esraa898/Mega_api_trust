@@ -1,9 +1,14 @@
 
 # Tasks Api 
+#   Project is  part of my training  at MegaTrust company
+*  Provide platform allows user to  add tasks using flutter .
+*  Fluter repo (http://github.com/OmarAssem11/tasks_app).
+*  using Jwt package to generate token.
+*  upload files to  tasks using s3 cloud .
+*  clean code using repository design pattern and observer design pattern .
 
-project to add tasks  and connect it with user and could upload files to his tasks using s3 cloud.
-## API Reference
 
+## API Reference which is consumed in Flutter app.
 
 #### register
 
